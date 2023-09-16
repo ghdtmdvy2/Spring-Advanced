@@ -18,6 +18,12 @@ public class HelloTraceV1 {
         log.info("[{}] {}{}", traceId.getId(), addSpace(START_PREFIX, traceId.getLevel()), message); // 로그 출력.
         return new TraceStatus(traceId, startTimeMs, message);
     }
+    public TraceStatus beginSync(TraceId traceId, String message) {
+        TraceId nextId = traceId.createNextId();
+        Long startTimeMs = System.currentTimeMillis(); // 현재 시간 저장.
+        log.info("[{}] {}{}", nextId.getId(), addSpace(START_PREFIX, nextId.getLevel()), message); // 로그 출력.
+        return new TraceStatus(nextId, startTimeMs, message);
+    }
     public void end(TraceStatus status) {
         complete(status, null);
     }
